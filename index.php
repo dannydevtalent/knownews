@@ -1,5 +1,5 @@
 <?php
-	
+	 
 	$GLOBALS['count'] = 0;
 	function update_news($news_url,$flag){
 		$servername='us-cdbr-iron-east-01.cleardb.net';

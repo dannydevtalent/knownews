@@ -16,7 +16,7 @@
 		$xmlfile = file_get_contents($url1);
 
 
-		
+		 
 		$news1_string = simplexml_load_string($xmlfile);
 
 

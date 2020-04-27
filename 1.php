@@ -1,7 +1,3 @@
-<?php
-	echo "aaaaaaaa";
-	 
-?>
 
 <!DOCTYPE html>
 <html>

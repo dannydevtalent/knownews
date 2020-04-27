@@ -19,7 +19,7 @@
 		
 		$news1_string = simplexml_load_string($xmlfile);
 
-
+ 
 		$news1_array = json_decode( json_encode($news1_string) , 1);
 
 		if($flag=="2"){

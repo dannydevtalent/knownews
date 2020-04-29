@@ -1,0 +1,52 @@
+{
+    "name": "contentful/contentful-management",
+    "description": "SDK for the Contentful Content Management API",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^7.2",
+        "contentful/core": "^3.0",
+        "symfony/console": "^3.0|^4.0|~4.0|^5.0",
+        "symfony/filesystem": "^3.0|^4.0|~4.0|~5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5",
+        "php-vcr/phpunit-testlistener-vcr": "3.0.0|^3.2",
+        "php-vcr/php-vcr": "dev-issues/289 as 1.4.5",
+        "nikic/php-parser": "^3.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Contentful\\Management\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Contentful\\Tests\\Management\\": "tests/"
+        },
+        "files": [
+            "vendor/contentful/core/scripts/TestCase.php"
+        ]
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/morozov/php-vcr"
+        }
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.1.0-dev"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "release": "php vendor/contentful/core/scripts/release.php",
+        "test-quick-fail": "php vendor/bin/phpunit --stop-on-error --stop-on-failure -v",
+        "lint-syntax": "$([ -f php-cs-fixer.phar ] && echo \"php php-cs-fixer.phar\" || echo \"php-cs-fixer\") fix --dry-run --stop-on-violation -v",
+        "lint-static-analysis": "$([ -f phpstan.phar ] && echo \"php phpstan.phar\" || echo \"phpstan\") analyse --level=max src/"
+    },
+    "suggest": {
+        "nikic/php-parser": "Allows generating content type classes"
+    }
+}

@@ -38,7 +38,7 @@
 
 
 	
-		$servername='us-cdbr-iron-east-01.cleardb.net'; 
+		$servername='us-cdbr-iron-east-01.cleardb.net';
 		$username='bd92f737073375';
 		$password='b1572f0c';
 		$dbname = "heroku_0324816153f4386";
@@ -63,7 +63,7 @@
 		
 
 		// for($i =0; $i<sizeof($news1_item_array); $i++){
-		for($i =0; $i<1; $i++){
+		for($i =0; $i<5; $i++){
 			$item_title = $news1_item_array[$i]['title'];
 			$item_title = str_replace("'","",$item_title);
 
@@ -338,6 +338,8 @@
 			</html>
 		';
 
+		echo $table;
+		
 		 if($counter==0){
 	        $table = '<h2> News daily update report</h2><br>
 	                <h3> There is no report today</h3>';

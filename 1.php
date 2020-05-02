@@ -15,7 +15,7 @@
 	use Contentful\Core\Api\Exception;
 	use Contentful\Management\Resource\Entry;
 
-
+ 
 	$counter = 0;
 	
 		$servername='us-cdbr-iron-east-01.cleardb.net';

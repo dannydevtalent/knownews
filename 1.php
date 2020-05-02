@@ -63,7 +63,7 @@
 		
 
 		// for($i =0; $i<sizeof($news1_item_array); $i++){
-		for($i =0; $i<5; $i++){
+		for($i =0; $i<2; $i++){
 			$item_title = $news1_item_array[$i]['title'];
 			$item_title = str_replace("'","",$item_title);
 
@@ -89,12 +89,12 @@
 				$entry->setField('mainFeed', 'en-US', true);
 				// Let's call the API to persist the entry
 				try {
-				     // $environmentProxy->create($entry);
+				     $environmentProxy->create($entry);
 				    $counter++;
-				     // $entry_id = $entry->getId();
-				    // $entry1 = $environmentProxy->getEntry($entry_id);
+				    $entry_id = $entry->getId();
+				    $entry1 = $environmentProxy->getEntry($entry_id);
 
-					 // $entry1->publish();
+					$entry1->publish();
 				    echo $counter." publish success<br>";
 					$table.='<tr><td>'.$counter.'</td><td>'.$item_title.'</td><td>'.$item_desc.'</td></tr>';
 
@@ -365,7 +365,7 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
-	<title>News Update</title>
+	<title>Football</title>
 </head>
 <body style="width: 50%; margin: 0 auto">
 	

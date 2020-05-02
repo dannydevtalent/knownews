@@ -18,7 +18,7 @@
 
 	use Contentful\Core\Api\Exception;
 	use Contentful\Management\Resource\Entry;
-
+ 
 
 	$counter = 0;
 	$table = '

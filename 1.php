@@ -62,8 +62,8 @@
 	
 		
 
-		// for($i =0; $i<sizeof($news1_item_array); $i++){
-		for($i =0; $i<2; $i++){
+		 for($i =0; $i<sizeof($news1_item_array); $i++){
+		// for($i =0; $i<2; $i++){
 			$item_title = $news1_item_array[$i]['title'];
 			$item_title = str_replace("'","",$item_title);
 

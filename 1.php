@@ -69,12 +69,12 @@
 				$entry->setField('mainFeed', 'en-US', true);
 				// Let's call the API to persist the entry
 				try {
-				    // $environmentProxy->create($entry);
+				     $environmentProxy->create($entry);
 				    $counter++;
-				    // $entry_id = $entry->getId();
-				    // $entry1 = $environmentProxy->getEntry($entry_id);
+				     $entry_id = $entry->getId();
+				    $entry1 = $environmentProxy->getEntry($entry_id);
 
-					// $entry1->publish();
+					 $entry1->publish();
 				    echo $counter." publish success<br>";
 				} catch (Exception $exception) {
 				    echo $exception->getMessage();

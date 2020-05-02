@@ -21,20 +21,20 @@
 
 
 	$counter = 0;
-	$table = '
-	    <h2> News daily update report</h2>
-	    <html> 
-	    <head>
-	    <title>Report</title>
-	    </head>
-	    <body>
-	    <table style="text-align: center">
-	        <thead>
-	            <th>ID</th>
-	            <th>News title</th>
-	            <th>News description</th>
-	        </thead>
-	        <tbody>';
+	// $table = '
+	//     <h2> News daily update report</h2>
+	//     <html> 
+	//     <head>
+	//     <title>Report</title>
+	//     </head>
+	//     <body>
+	//     <table style="text-align: center">
+	//         <thead>
+	//             <th>ID</th>
+	//             <th>News title</th>
+	//             <th>News description</th>
+	//         </thead>
+	//         <tbody>';
 
 
 	
@@ -187,7 +187,7 @@
 
 		// mysqli_close($conn);
 	
-function 3
+//function 3
 
 		$url1="https://www.healio.com/sws/feed/news/dermatology";
 		//  Initiate curl
@@ -331,31 +331,31 @@ function 3
 
 		// mysqli_close($conn);
 
-		$table.= '
-			</tbody>
-			</table>
-			</body>
-			</html>
-		';
+		// $table.= '
+		// 	</tbody>
+		// 	</table>
+		// 	</body>
+		// 	</html>
+		// ';
 
-		echo $table;
+		// echo $table;
 		
-		 if($counter==0){
-	        $table = '<h2> News daily update report</h2><br>
-	                <h3> There is no report today</h3>';
-	    }
+		//  if($counter==0){
+	 //        $table = '<h2> News daily update report</h2><br>
+	 //                <h3> There is no report today</h3>';
+	 //    }
 
-	    $to = "lujin0406@outlook.com";
-		//$to = "lujin0406@outlook.com";
-		$subject = "HTML email";
+	 //    $to = "lujin0406@outlook.com";
+		// //$to = "lujin0406@outlook.com";
+		// $subject = "HTML email";
 
-		$headers = "MIME-Version: 1.0" . "\r\n"; 
-		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n"; 
+		// $headers = "MIME-Version: 1.0" . "\r\n"; 
+		// $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n"; 
 		 
-		$headers .= 'From: sticsbackoffice < sticsbackoffice@iotops.net>' . "\r\n"; 
-		$headers .= 'Bcc: sticsbackoffice@iotops.net' . "\r\n"; 
+		// $headers .= 'From: sticsbackoffice < sticsbackoffice@iotops.net>' . "\r\n"; 
+		// $headers .= 'Bcc: sticsbackoffice@iotops.net' . "\r\n"; 
 
-		mail($to,$subject,$table,$headers);
+		// mail($to,$subject,$table,$headers);
 
 	
 ?>
@@ -365,7 +365,7 @@ function 3
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
-	<title>News Update</title>
+	<title>Football</title>
 </head>
 <body style="width: 50%; margin: 0 auto">
 	

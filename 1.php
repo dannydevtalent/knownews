@@ -38,7 +38,7 @@
 
 
 	
-		$servername='us-cdbr-iron-east-01.cleardb.net';
+		$servername='us-cdbr-iron-east-01.cleardb.net'; 
 		$username='bd92f737073375';
 		$password='b1572f0c';
 		$dbname = "heroku_0324816153f4386";

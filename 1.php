@@ -4,7 +4,7 @@
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL); 
- 
+
 	$spaceId= "yx2a49crvee2";
 	$environmentId = "development";
 	$contentTypeId = "article";
@@ -96,7 +96,7 @@
 
 					$entry1->publish();
 				    echo $counter." publish success<br>";
-					$table.='<tr><td>'.$counter.'</td><td>'.$item_title.'</td><td>'.$item_desc.'</td></tr>';
+					// $table.='<tr><td>'.$counter.'</td><td>'.$item_title.'</td><td>'.$item_desc.'</td></tr>';
 
 				} catch (Exception $exception) {
 				    echo $exception->getMessage();
@@ -124,210 +124,210 @@
 
 //function 2
 
-		// $url1="https://www.news-medical.net/tag/feed/Dermatology.aspx";
-		// //  Initiate curl
-		// $xmlfile = file_get_contents($url1);
-		// $news1_string = simplexml_load_string($xmlfile);
-		// $news1_array = json_decode( json_encode($news1_string) , 1);
-		// $news1_item_array = $news1_array['channel']['item'];
-		// for($i =0; $i<sizeof($news1_item_array); $i++){
-		// 	$item_title = $news1_item_array[$i]['title'];
-		// 	$item_title = str_replace("'","",$item_title);
+		$url1="https://www.news-medical.net/tag/feed/Dermatology.aspx";
+		//  Initiate curl
+		$xmlfile = file_get_contents($url1);
+		$news1_string = simplexml_load_string($xmlfile);
+		$news1_array = json_decode( json_encode($news1_string) , 1);
+		$news1_item_array = $news1_array['channel']['item'];
+		for($i =0; $i<sizeof($news1_item_array); $i++){
+			$item_title = $news1_item_array[$i]['title'];
+			$item_title = str_replace("'","",$item_title);
 
-		// 	$item_link  = $news1_item_array[$i]['link'];
-		// 	$item_desc  = $news1_item_array[$i]['description'];
+			$item_link  = $news1_item_array[$i]['link'];
+			$item_desc  = $news1_item_array[$i]['description'];
 
-		// 	$item_json = json_encode($news1_item_array[$i]);
-		// 	$item_json = str_replace("'","",$item_json);
+			$item_json = json_encode($news1_item_array[$i]);
+			$item_json = str_replace("'","",$item_json);
 
-		// 	$check_sql = "SELECT id FROM update_news WHERE search_title='$item_title' AND search_link='$item_link'";
-		// 	$search_result = mysqli_query($conn, $check_sql);
+			$check_sql = "SELECT id FROM update_news WHERE search_title='$item_title' AND search_link='$item_link'";
+			$search_result = mysqli_query($conn, $check_sql);
 
-		// 	if (mysqli_num_rows($search_result) == 0) {
+			if (mysqli_num_rows($search_result) == 0) {
 				
 
-		// 		$entry = new Entry('article');
+				$entry = new Entry('article');
 
-		// 		$entry->setField('title', 'en-US', $item_title);
-		// 		$entry->setField('description', 'en-US', $item_desc);
-		// 		$entry->setField('link', 'en-US', $item_link);
-		// 		$entry->setField('mainFeed', 'en-US', true);
-		// 		// Let's call the API to persist the entry
-		// 		try {
-		// 		    $environmentProxy->create($entry);
-		// 		 	$counter++;
-		// 		    $entry_id = $entry->getId();
-		// 		    $entry1 = $environmentProxy->getEntry($entry_id);
+				$entry->setField('title', 'en-US', $item_title);
+				$entry->setField('description', 'en-US', $item_desc);
+				$entry->setField('link', 'en-US', $item_link);
+				$entry->setField('mainFeed', 'en-US', true);
+				// Let's call the API to persist the entry
+				try {
+				    $environmentProxy->create($entry);
+				 	$counter++;
+				    $entry_id = $entry->getId();
+				    $entry1 = $environmentProxy->getEntry($entry_id);
 
-		// 			$entry1->publish();
-		// 		    echo $counter." publish success<br>";
-		// 		} catch (Exception $exception) {
-		// 		    echo $exception->getMessage();
-		// 		}
-
-
+					$entry1->publish();
+				    echo $counter." publish success<br>";
+				} catch (Exception $exception) {
+				    echo $exception->getMessage();
+				}
 
 
 
-		// 		$today = date("Y/m/d");
-		// 		$insert_sql = "INSERT INTO update_news (item,update_date,status,search_title,search_link)
-		// 	     VALUES ('$item_json','$today','1','$item_title','$item_link')";
+
+
+				$today = date("Y/m/d");
+				$insert_sql = "INSERT INTO update_news (item,update_date,status,search_title,search_link)
+			     VALUES ('$item_json','$today','1','$item_title','$item_link')";
 			 
-		// 	     if (mysqli_query($conn, $insert_sql)) {
+			     if (mysqli_query($conn, $insert_sql)) {
 			     	
 
 			     	
 			     	
-		// 	     } else {
-		// 	     	echo "<br>";
-		// 	        echo "Error: " . $insert_sql . ":-" . mysqli_error($conn);
-		// 	     }
-		// 	}  
-		// }
+			     } else {
+			     	echo "<br>";
+			        echo "Error: " . $insert_sql . ":-" . mysqli_error($conn);
+			     }
+			}  
+		}
 
 		// mysqli_close($conn);
 	
-//function 3
+function 3
 
-		// $url1="https://www.healio.com/sws/feed/news/dermatology";
-		// //  Initiate curl
-		// $xmlfile = file_get_contents($url1);
-		// $news1_string = simplexml_load_string($xmlfile);
-		// $news1_array = json_decode( json_encode($news1_string) , 1);
-		// $news1_item_array = $news1_array['channel']['item'];
+		$url1="https://www.healio.com/sws/feed/news/dermatology";
+		//  Initiate curl
+		$xmlfile = file_get_contents($url1);
+		$news1_string = simplexml_load_string($xmlfile);
+		$news1_array = json_decode( json_encode($news1_string) , 1);
+		$news1_item_array = $news1_array['channel']['item'];
 		
 	
 		
 
-		// for($i =0; $i<sizeof($news1_item_array); $i++){
-		// 	$item_title = $news1_item_array[$i]['title'];
-		// 	$item_title = str_replace("'","",$item_title);
+		for($i =0; $i<sizeof($news1_item_array); $i++){
+			$item_title = $news1_item_array[$i]['title'];
+			$item_title = str_replace("'","",$item_title);
 
-		// 	$item_link  = $news1_item_array[$i]['link'];
-		// 	$item_desc  = $news1_item_array[$i]['description'];
+			$item_link  = $news1_item_array[$i]['link'];
+			$item_desc  = $news1_item_array[$i]['description'];
 
-		// 	$item_json = json_encode($news1_item_array[$i]);
-		// 	$item_json = str_replace("'","",$item_json);
+			$item_json = json_encode($news1_item_array[$i]);
+			$item_json = str_replace("'","",$item_json);
 
 			
 
-		// 	$check_sql = "SELECT id FROM update_news WHERE search_title='$item_title' AND search_link='$item_link'";
-		// 	$search_result = mysqli_query($conn, $check_sql);
+			$check_sql = "SELECT id FROM update_news WHERE search_title='$item_title' AND search_link='$item_link'";
+			$search_result = mysqli_query($conn, $check_sql);
 
-		// 	if (mysqli_num_rows($search_result) == 0) {
+			if (mysqli_num_rows($search_result) == 0) {
 				
 
-		// 		$entry = new Entry('article');
+				$entry = new Entry('article');
 
-		// 		$entry->setField('title', 'en-US', $item_title);
-		// 		$entry->setField('description', 'en-US', $item_desc);
-		// 		$entry->setField('link', 'en-US', $item_link);
-		// 		$entry->setField('mainFeed', 'en-US', true);
-		// 		// Let's call the API to persist the entry
-		// 		try {
-		// 		    $environmentProxy->create($entry);
-		// 		    $counter++;
-		// 		    $entry_id = $entry->getId();
-		// 		    $entry1 = $environmentProxy->getEntry($entry_id);
+				$entry->setField('title', 'en-US', $item_title);
+				$entry->setField('description', 'en-US', $item_desc);
+				$entry->setField('link', 'en-US', $item_link);
+				$entry->setField('mainFeed', 'en-US', true);
+				// Let's call the API to persist the entry
+				try {
+				    $environmentProxy->create($entry);
+				    $counter++;
+				    $entry_id = $entry->getId();
+				    $entry1 = $environmentProxy->getEntry($entry_id);
 
-		// 			$entry1->publish();
-		// 		    echo $counter." publish success<br>";
-		// 		} catch (Exception $exception) {
-		// 		    echo $exception->getMessage();
-		// 		}
-
-
+					$entry1->publish();
+				    echo $counter." publish success<br>";
+				} catch (Exception $exception) {
+				    echo $exception->getMessage();
+				}
 
 
 
-		// 		$today = date("Y/m/d");
-		// 		$insert_sql = "INSERT INTO update_news (item,update_date,status,search_title,search_link)
-		// 	     VALUES ('$item_json','$today','1','$item_title','$item_link')";
+
+
+				$today = date("Y/m/d");
+				$insert_sql = "INSERT INTO update_news (item,update_date,status,search_title,search_link)
+			     VALUES ('$item_json','$today','1','$item_title','$item_link')";
 			 
-		// 	     if (mysqli_query($conn, $insert_sql)) {
+			     if (mysqli_query($conn, $insert_sql)) {
 			     	
 
 			     	
 			     	
-		// 	     } else {
-		// 	     	echo "<br>";
-		// 	        echo "Error: " . $insert_sql . ":-" . mysqli_error($conn);
-		// 	     }
-		// 	}  
-		// }
+			     } else {
+			     	echo "<br>";
+			        echo "Error: " . $insert_sql . ":-" . mysqli_error($conn);
+			     }
+			}  
+		}
 
 		// mysqli_close($conn);
 
 
 //function 4
 
-		// $url1="https://www.dermatologyadvisor.com/feed/";
-		// //  Initiate curl
-		// $xmlfile = file_get_contents($url1);
-		// $news1_string = simplexml_load_string($xmlfile);
-		// $news1_array = json_decode( json_encode($news1_string) , 1);
-		// $news1_item_array = $news1_array['channel']['item'];
+		$url1="https://www.dermatologyadvisor.com/feed/";
+		//  Initiate curl
+		$xmlfile = file_get_contents($url1);
+		$news1_string = simplexml_load_string($xmlfile);
+		$news1_array = json_decode( json_encode($news1_string) , 1);
+		$news1_item_array = $news1_array['channel']['item'];
 		
 	
 		
 
-		// for($i =0; $i<sizeof($news1_item_array); $i++){
-		// 	$item_title = $news1_item_array[$i]['title'];
-		// 	$item_title_check = str_replace("'","",$item_title);
+		for($i =0; $i<sizeof($news1_item_array); $i++){
+			$item_title = $news1_item_array[$i]['title'];
+			$item_title_check = str_replace("'","",$item_title);
 
-		// 	$item_link  = $news1_item_array[$i]['link'];
-		// 	$item_desc  = $news1_item_array[$i]['description'];
+			$item_link  = $news1_item_array[$i]['link'];
+			$item_desc  = $news1_item_array[$i]['description'];
 
-		// 	$item_json = json_encode($news1_item_array[$i]);
-		// 	$item_json = str_replace("'","",$item_json);
+			$item_json = json_encode($news1_item_array[$i]);
+			$item_json = str_replace("'","",$item_json);
 
 			
 
-		// 	$check_sql = "SELECT id FROM update_news WHERE search_title='$item_title_check' AND search_link='$item_link'";
-		// 	$search_result = mysqli_query($conn, $check_sql);
+			$check_sql = "SELECT id FROM update_news WHERE search_title='$item_title_check' AND search_link='$item_link'";
+			$search_result = mysqli_query($conn, $check_sql);
 
-		// 	if (mysqli_num_rows($search_result) == 0) {
+			if (mysqli_num_rows($search_result) == 0) {
 				
 
-		// 		$entry = new Entry('article');
+				$entry = new Entry('article');
 
-		// 		$entry->setField('title', 'en-US', $item_title);
-		// 		$entry->setField('description', 'en-US', $item_desc);
-		// 		$entry->setField('link', 'en-US', $item_link);
-		// 		$entry->setField('mainFeed', 'en-US', true);
-		// 		// Let's call the API to persist the entry
-		// 		try {
-		// 		    $environmentProxy->create($entry);
+				$entry->setField('title', 'en-US', $item_title);
+				$entry->setField('description', 'en-US', $item_desc);
+				$entry->setField('link', 'en-US', $item_link);
+				$entry->setField('mainFeed', 'en-US', true);
+				// Let's call the API to persist the entry
+				try {
+				    $environmentProxy->create($entry);
 				   
-		// 		   	$counter++;
-		// 		    $entry_id = $entry->getId();
-		// 		    $entry1 = $environmentProxy->getEntry($entry_id);
+				   	$counter++;
+				    $entry_id = $entry->getId();
+				    $entry1 = $environmentProxy->getEntry($entry_id);
 
-		// 			$entry1->publish();
-		// 		    echo $counter." publish success<br>";
-		// 		} catch (Exception $exception) {
-		// 		    echo $exception->getMessage();
-		// 		}
-
-
+					$entry1->publish();
+				    echo $counter." publish success<br>";
+				} catch (Exception $exception) {
+				    echo $exception->getMessage();
+				}
 
 
 
-		// 		$today = date("Y/m/d");
-		// 		$insert_sql = "INSERT INTO update_news (item,update_date,status,search_title,search_link)
-		// 	     VALUES ('$item_json','$today','1','$item_title','$item_link')";
+
+
+				$today = date("Y/m/d");
+				$insert_sql = "INSERT INTO update_news (item,update_date,status,search_title,search_link)
+			     VALUES ('$item_json','$today','1','$item_title','$item_link')";
 			 
-		// 	     if (mysqli_query($conn, $insert_sql)) {
+			     if (mysqli_query($conn, $insert_sql)) {
 			     	
 
 			     	
 			     	
-		// 	     } else {
-		// 	     	echo "<br>";
-		// 	        echo "Error: " . $insert_sql . ":-" . mysqli_error($conn);
-		// 	     }
-		// 	}  
-		// }
+			     } else {
+			     	echo "<br>";
+			        echo "Error: " . $insert_sql . ":-" . mysqli_error($conn);
+			     }
+			}  
+		}
 
 		// mysqli_close($conn);
 
@@ -365,7 +365,7 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
-	<title>Update news</title>
+	<title>Football</title>
 </head>
 <body style="width: 50%; margin: 0 auto">
 	

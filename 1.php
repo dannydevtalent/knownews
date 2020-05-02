@@ -1,6 +1,10 @@
 <?php
 	require_once 'vendor/autoload.php';
 
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL); 
+
 	$spaceId= "yx2a49crvee2";
 	$environmentId = "development";
 	$contentTypeId = "article";
@@ -15,8 +19,24 @@
 	use Contentful\Core\Api\Exception;
 	use Contentful\Management\Resource\Entry;
 
- 
+
 	$counter = 0;
+	$table = '
+	    <h2> News daily update report</h2>
+	    <html> 
+	    <head>
+	    <title>Report</title>
+	    </head>
+	    <body>
+	    <table style="text-align: center">
+	        <thead>
+	            <th>ID</th>
+	            <th>News title</th>
+	            <th>News description</th>
+	        </thead>
+	        <tbody>';
+
+
 	
 		$servername='us-cdbr-iron-east-01.cleardb.net';
 		$username='bd92f737073375';
@@ -69,13 +89,15 @@
 				$entry->setField('mainFeed', 'en-US', true);
 				// Let's call the API to persist the entry
 				try {
-				     $environmentProxy->create($entry);
+				     // $environmentProxy->create($entry);
 				    $counter++;
-				     $entry_id = $entry->getId();
-				    $entry1 = $environmentProxy->getEntry($entry_id);
+				     // $entry_id = $entry->getId();
+				    // $entry1 = $environmentProxy->getEntry($entry_id);
 
-					 $entry1->publish();
+					 // $entry1->publish();
 				    echo $counter." publish success<br>";
+					$table.='<tr><td>'.$counter.'</td><td>'.$item_title.'</td><td>'.$item_desc.'</td></tr>';
+
 				} catch (Exception $exception) {
 				    echo $exception->getMessage();
 				}
@@ -308,6 +330,31 @@
 		// }
 
 		// mysqli_close($conn);
+
+		$table.= '
+			</tbody>
+			</table>
+			</body>
+			</html>
+		';
+
+		 if($counter==0){
+	        $table = '<h2> News daily update report</h2><br>
+	                <h3> There is no report today</h3>';
+	    }
+
+	    $to = "lujin0406@outlook.com";
+		//$to = "lujin0406@outlook.com";
+		$subject = "HTML email";
+
+		$headers = "MIME-Version: 1.0" . "\r\n"; 
+		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n"; 
+		 
+		$headers .= 'From: sticsbackoffice < sticsbackoffice@iotops.net>' . "\r\n"; 
+		$headers .= 'Bcc: sticsbackoffice@iotops.net' . "\r\n"; 
+
+		mail($to,$subject,$table,$headers);
+
 	
 ?>
 

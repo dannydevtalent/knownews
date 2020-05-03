@@ -1,6 +1,6 @@
 <?php
 	require_once 'vendor/autoload.php';
-
+ 
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL); 
@@ -343,7 +343,7 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
-	<title>Football</title>
+	<title>Update news</title>
 </head>
 <body style="width: 50%; margin: 0 auto">
 	

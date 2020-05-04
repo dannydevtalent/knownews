@@ -1,6 +1,6 @@
 <?php
 	require_once 'vendor/autoload.php';
- 
+
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL); 
@@ -89,67 +89,81 @@
 		  while ($row = mysqli_fetch_row($result)) {
 		   	$rows[] = $row;
 		  }
-		  echo json_encode($rows);
+		  // echo json_encode($rows);
 		  
 		}
 
 	
 
-		for($j= 0; $j<sizeof($rows); $j++)
+		 for($j= 0; $j<sizeof($rows); $j++)
 		{
 			$url1 = $rows[$j][1];
-			//  Initiate curl
 			echo $url1;
+			echo "<br>";
 			$xmlfile = file_get_contents($url1);
-			$news1_string = simplexml_load_string($xmlfile);
-			$news1_array = json_decode( json_encode($news1_string) , 1);
-			if(isset($news1_array['channel']['item'])){
-				$news1_item_array = $news1_array['channel']['item'];
+			$dom = new DOMDocument;
+			$dom->loadXML($xmlfile);
+
+			if(sizeof($dom->getElementsByTagName('item'))>0){
+				$items = $dom->getElementsByTagName('item');
 			}
-			else if(isset($news1_array['item'])){
-				$news1_item_array = $news1_array['item'];
+			else if(sizeof($dom->getElementsByTagName('channel')->item(0)->getElementsByTagName('item'))>0)
+			{
+				$items = $dom->getElementsByTagName('channel')->item(0)->getElementsByTagName('item');
 			}
-			if(isset($news1_array['channel']['items'])){
-				$news1_item_array = $news1_array['channel']['items'];
+			
+			else if(sizeof($dom->getElementsByTagName('items'))>0){
+				$items = $dom->getElementsByTagName('items');
 			}
-			else if(isset($news1_array['items'])){
-				$news1_item_array = $news1_array['items'];
+			else if(sizeof($dom->getElementsByTagName('channel')->item(0)->getElementsByTagName('items'))>0)
+			{
+				$items = $dom->getElementsByTagName('channel')->item(0)->getElementsByTagName('items');
 			}
+			
 
 
-			for($i =0; $i<sizeof($news1_item_array); $i++){
-				$item_title = $news1_item_array[$i]['title'];
-				$item_title = str_replace("'","",$item_title);
+			$k=0;
+			foreach ($items as $item) {
+				$title        		= $items->item($k)->getElementsByTagName('title');
 
-				$item_link  = $news1_item_array[$i]['link'];
-				$item_desc  = $news1_item_array[$i]['description'];
 
-				$item_json = json_encode($news1_item_array[$i]);
-				$item_json = str_replace("'","",$item_json);
+				$item_title_html 		= $title->item(0)->nodeValue;
+				$item_title =       strip_tags($item_title_html);
+				echo $item_title;
+				echo "<br>";
+				$description   		= $items->item($k)->getElementsByTagName('description');
 
+				$item_desc_html = $description->item(0)->nodeValue;
+				$item_desc = strip_tags($item_desc_html);
+				
+
+				$link         		= $items->item($k)->getElementsByTagName('link');
+				$item_link  		= $link->item(0)->nodeValue;
+				
 				$check_sql = "SELECT id FROM update_news WHERE search_title='$item_title' AND search_link='$item_link'";
-				$search_result = mysqli_query($conn, $check_sql);
+			 	$search_result = mysqli_query($conn, $check_sql);
 
-				if (mysqli_num_rows($search_result) == 0) {
+			 	if (mysqli_num_rows($search_result) == 0) {
 					$entry = new Entry('article');
 					$entry->setField('title', 'en-US', $item_title);
 					$entry->setField('description', 'en-US', $item_desc);
 					$entry->setField('link', 'en-US', $item_link);
-					$entry->setField('mainFeed', 'en-US', true);
+					 $entry->setField('mainFeed', 'en-US', true);
 					try {
-					     $environmentProxy->create($entry);
+					    $environmentProxy->create($entry);
 					    $counter++;
 					     $entry_id = $entry->getId();
 					     $entry1 = $environmentProxy->getEntry($entry_id);
 
 						 $entry1->publish();
+					    
 					    echo $counter." Publish success<br>";
-					    echo $item_title." title<br>";
+					    // echo $item_title." title<br>";
 						// $table.='<tr><td>'.$counter.'</td><td>'.$item_title.'</td><td>'.$item_desc.'</td></tr>';
 
 						$today = date("Y/m/d");
 						$insert_sql = "INSERT INTO update_news (item,update_date,status,search_title,search_link)
-					     VALUES ('$item_json','$today','1','$item_title','$item_link')";
+					     VALUES ('aa','$today','1','$item_title','$item_link')";
 					     if (mysqli_query($conn, $insert_sql)) {			     	
 					     } else {
 					     	echo "<br>";
@@ -161,10 +175,14 @@
 
 					} catch (Exception $exception) {
 					    echo $exception->getMessage();
+					    echo "<br>";
 					}
-					
-				}  
-			}	
+					 
+				  }
+				  $k++;
+			}
+
+			
 		}
 
 

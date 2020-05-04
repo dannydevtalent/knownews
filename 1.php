@@ -1,173 +1,195 @@
+<?php
+	require_once 'vendor/autoload.php';
+
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL); 
+
+	$spaceId= "yx2a49crvee2";
+	$environmentId = "development";
+	$contentTypeId = "article";
+	use Contentful\Management\Client;
+
+	$client = new Client('CFPAT-um6p7SkC571k7OlGhPs9X6IHGKqUi_S5KHr9oNP9XzM');
+	$environment = $client->getEnvironmentProxy('yx2a49crvee2', 'master');
+	$contentType = $client->getContentType($spaceId, $environmentId, $contentTypeId);
+	$environmentProxy = $client->getEnvironmentProxy($spaceId, $environmentId);
+	$contentType = $environmentProxy->getContentType($contentTypeId);
+
+	use Contentful\Core\Api\Exception;
+	use Contentful\Management\Resource\Entry;
+
+
+	function sendMessage($title){
+	    $content = array(
+	        "en" => $title
+	        );
+
+	    $fields = array(
+	        'app_id' => "59d1fdb1-1d5a-4049-81e6-61e1d918975e",
+	        'included_segments' => array('All'),
+	        'data' => array("foo" => "bar"),
+	        'large_icon' =>"kp-icon-1024px.png",
+	        'contents' => $content
+	    );
+
+	    $fields = json_encode($fields);
+	    print("\nJSON sent:\n");
+	    print($fields);
+
+	    $ch = curl_init();
+	    curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+	    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
+	                                               'Authorization: Basic Y2ZmMzI4ZTItZTU3Yy00NTcxLTg2ODctODljMjhiMDBjMWQ3'));
+	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+	    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+	    curl_setopt($ch, CURLOPT_POST, TRUE);
+	    curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+	    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);    
+
+	    $response = curl_exec($ch);
+	    curl_close($ch);
+
+	    return $response;
+	}
+
+
+	$counter = 0;
+	// $table = '
+	//     <h2> News daily update report</h2>
+	//     <html> 
+	//     <head>
+	//     <title>Report</title>
+	//     </head>
+	//     <body>
+	//     <table style="text-align: center">
+	//         <thead>
+	//             <th>ID</th>
+	//             <th>News title</th>
+	//             <th>News description</th>
+	//         </thead>
+	//         <tbody>';
+
+
+	
+		$servername='us-cdbr-iron-east-01.cleardb.net';
+		$username='bd92f737073375';
+		$password='b1572f0c';
+		$dbname = "heroku_0324816153f4386";
+		$conn=mysqli_connect($servername,$username,$password,"$dbname");
+		if(!$conn){
+			 die('Could not Connect MySql Server:' .mysql_error());
+		}
+
+
+		$urls_query = "SELECT * FROM feedurl";
+		if ($result = mysqli_query($conn, $urls_query)) {
+		  // Fetch one and one row
+		  $rows=[];
+		  while ($row = mysqli_fetch_row($result)) {
+		   	$rows[] = $row;
+		  }
+		  echo json_encode($rows);
+		  
+		}
+
+	
+
+		for($j= 0; $j<sizeof($rows); $j++)
+		{
+			$url1 = $rows[$j][1];
+			//  Initiate curl
+			echo $url1;
+			$xmlfile = file_get_contents($url1);
+			$news1_string = simplexml_load_string($xmlfile);
+			$news1_array = json_decode( json_encode($news1_string) , 1);
+			if(isset($news1_array['channel']['item'])){
+				$news1_item_array = $news1_array['channel']['item'];
+			}
+			else if(isset($news1_array['item'])){
+				$news1_item_array = $news1_array['item'];
+			}
+			if(isset($news1_array['channel']['items'])){
+				$news1_item_array = $news1_array['channel']['items'];
+			}
+			else if(isset($news1_array['items'])){
+				$news1_item_array = $news1_array['items'];
+			}
+
+
+			for($i =0; $i<sizeof($news1_item_array); $i++){
+				$item_title = $news1_item_array[$i]['title'];
+				$item_title = str_replace("'","",$item_title);
+
+				$item_link  = $news1_item_array[$i]['link'];
+				$item_desc  = $news1_item_array[$i]['description'];
+
+				$item_json = json_encode($news1_item_array[$i]);
+				$item_json = str_replace("'","",$item_json);
+
+				$check_sql = "SELECT id FROM update_news WHERE search_title='$item_title' AND search_link='$item_link'";
+				$search_result = mysqli_query($conn, $check_sql);
+
+				if (mysqli_num_rows($search_result) == 0) {
+					$entry = new Entry('article');
+					$entry->setField('title', 'en-US', $item_title);
+					$entry->setField('description', 'en-US', $item_desc);
+					$entry->setField('link', 'en-US', $item_link);
+					$entry->setField('mainFeed', 'en-US', true);
+					try {
+					     $environmentProxy->create($entry);
+					    $counter++;
+					     $entry_id = $entry->getId();
+					     $entry1 = $environmentProxy->getEntry($entry_id);
+
+						 $entry1->publish();
+					    echo $counter." Publish success<br>";
+					    echo $item_title." title<br>";
+						// $table.='<tr><td>'.$counter.'</td><td>'.$item_title.'</td><td>'.$item_desc.'</td></tr>';
+
+						$today = date("Y/m/d");
+						$insert_sql = "INSERT INTO update_news (item,update_date,status,search_title,search_link)
+					     VALUES ('$item_json','$today','1','$item_title','$item_link')";
+					     if (mysqli_query($conn, $insert_sql)) {			     	
+					     } else {
+					     	echo "<br>";
+					        echo "Error: " . $insert_sql . ":-" . mysqli_error($conn);
+					     }
+
+
+					     sendMessage($item_title);
+
+					} catch (Exception $exception) {
+					    echo $exception->getMessage();
+					}
+					
+				}  
+			}	
+		}
+
+
+
+
+
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html>
-<head> 
-  <title>Log in</title>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-  
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <style type="text/css">
-    .card{
-      border: 1px solid rgba(0, 0, 0, 0.325);
-      background-color: #dbdbdb;
-    }
-    .login-form .card {
-      position: relative;
-      overflow: hidden;
-    }
-    .login-form .card .shape {
-      width: 300px;
-      height: 300px;
-      border-radius: 40px;
-      display: block;
-      position: absolute;
-      top: 0;
-      right: -150px;
-      background: rgba(0,0,0,0.05);
-      transform: rotate(45deg);
-    }
-
-    .login-form .card .card-header i {
-       font-size: 54px;
-       margin-bottom: 15px;
-    }
-
-    .login-form .card .card-header h2 {
-       font-size: 25px;
-       font-weight: 700;
-    }
-
-    .login-form .card .card-body {
-      position: relative;
-    }
-
-    .login-form .card .card-body label {
-      font-size: 13px;
-    }
-
-    .login-form .card .card-body input,
-    .login-form .card .card-body textarea {
-      border: 1px solid #aaa;
-      border-radius: 0;
-    }
-    .login-form .card .card-body input:focus,
-    .login-form .card .card-body textarea:focus {
-      border: 1px solid #222;
-    }
-
-    .login-form .card .card-body .btn {
-      background: #222;
-      color: #fff;
-      border-radius: 0;
-    }
-    .login-form .card .card-body .btn:hover {
-      background: #555;
-      color: #fff;
-    }
-    .login-form .card .card-body .custom-control label {
-      font-size: 16px;
-    }
-    @keyframes loading-gif {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-    .loading-gif 
-    {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba( 0, 0, 0, 0.5);
-    }
-    .loading-gif:after 
-    {
-      top: 50%;
-      left: 50%;
-      position: fixed;
-      content: " ";
-      display: block;
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      border: 5px solid #fcf;
-      border-color: #fcf transparent #fcf transparent;
-      animation: loading-gif 1.2s linear infinite;
-    }
-  </style>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+	<title>Football</title>
 </head>
-<body>
-  <!-- Login Form -->
-  <div class="loading-gif"></div>
-<div class="login-form py-4" style="margin-top:5%;">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-5">
-        <div class="card shadow-sm">
-          <span class="shape"></span>
-          <div class="card-header text-center bg-transparent">
-            <img src="kp-icon-1024px.png" width="15%">
-            <h2 style="margin-top: 10px">LOGIN (RSS FEED)</h2>
-          </div>
-          <div class="card-body py-4">
-            <form action="updateurl.php" method="post" class="form_login">
-              <div class="form-group">
-                <label for="name">Username</label>
-                <input type="text" class="form-control shadow-none username" name="username" placeholder="Username">
-              </div>
-              <div class="form-group">
-                <label for="name">Password</label>
-                 <input type="password" class="form-control shadow-none password" name="password" placeholder="Password">
-              </div>
-         
-            </form>
-            <div class="form-group" style="text-align: center;">
-                <button class="btn btn-log-in">Log in</button>
-              </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /Login Form -->
+<body style="width: 50%; margin: 0 auto">
+	
 </body>
 </html>
-
 <script type="text/javascript">
-    $(document).ready(function(){
-        $(".btn-log-in").click(function(){
-          $(".loading-gif").css("display","block");
-            var username = $(".username").val();
-            var password = $(".password").val();
-            jQuery.ajax({
-              url:"ajax.php",
-                data: { 
-                   request:"user_login",
-                   username: username,
-                   password : password
-                    },
-                    type: 'post',
-                    success: function(result) 
-                    {
-                      //$(".loading-gif").css("display","none");
-                      $(".loading-gif").css("display","none");
-                      if(result=="success"){
-                         // alert("success");
-                          $(".form_login")[0].submit();
-                      }
-                      else{
-                          alert("The username or password is not correct");
-                      }
-
-                    }
-            });
-        })
-    });
+	$(document).ready(function(){
+		
+	});
 </script>

@@ -7,6 +7,10 @@
   
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <style type="text/css">
+    .card{
+      border: 1px solid rgba(0, 0, 0, 0.325);
+      background-color: #dbdbdb;
+    }
     .login-form .card {
       position: relative;
       overflow: hidden;
@@ -108,14 +112,14 @@
         <div class="card shadow-sm">
           <span class="shape"></span>
           <div class="card-header text-center bg-transparent">
-            <i class="fas fa-user-circle"></i>
-            <h2>Login Form</h2>
+            <img src="kp-icon-1024px.png" width="15%">
+            <h2 style="margin-top: 10px">LOGIN (RSS FEED)</h2>
           </div>
           <div class="card-body py-4">
             <form action="updateurl.php" method="post" class="form_login">
               <div class="form-group">
                 <label for="name">Username</label>
-                <input type="text" class="form-control shadow-none username" name="username" placeholder="Email">
+                <input type="text" class="form-control shadow-none username" name="username" placeholder="Username">
               </div>
               <div class="form-group">
                 <label for="name">Password</label>
@@ -123,7 +127,7 @@
               </div>
          
             </form>
-            <div class="form-group">
+            <div class="form-group" style="text-align: center;">
                 <button class="btn btn-log-in">Log in</button>
               </div>
           </div>

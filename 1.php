@@ -172,7 +172,7 @@
 					     }
 
  
-					     //sendMessage($item_title);
+					     sendMessage($item_title);
 
 					} catch (Exception $exception) {
 					    echo $exception->getMessage();

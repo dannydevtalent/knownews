@@ -4,7 +4,7 @@
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL); 
- 
+
 	set_time_limit(500);
 
 	$spaceId= "yx2a49crvee2";
@@ -189,23 +189,26 @@
 
 		$table.='</tbody></table></body></html>';
 
-		$email = new \SendGrid\Mail\Mail(); 
-		$email->setFrom("knowproapp@gmail.com", "knowproapp User");
-		$email->setSubject("News update report (KnowProDerm)");
-		$email->addTo("knowproapp@gmail.com", "knowproapp@gmail.com");
-		$email->addContent("text/plain", "and easy to do anywhere, even with PHP");
-		$email->addContent(
-		    "text/html", $table
-		);
-		$sendgrid = new \SendGrid('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');
-		try {
-		    $response = $sendgrid->send($email);
-		    print $response->statusCode() . "\n";
-		    print_r($response->headers());
-		    print $response->body() . "\n";
-		} catch (Exception $e) {
-		    echo 'Caught exception: '. $e->getMessage() ."\n";
+		if($counter>0 ){
+			$email = new \SendGrid\Mail\Mail(); 
+			$email->setFrom("knowproapp@gmail.com", "knowproapp User");
+			$email->setSubject("News update report (KnowProDerm)");
+			$email->addTo("knowproapp@gmail.com", "knowproapp@gmail.com");
+			$email->addContent("text/plain", "and easy to do anywhere, even with PHP");
+			$email->addContent(
+			    "text/html", $table
+			);
+			$sendgrid = new \SendGrid('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');
+			try {
+			    $response = $sendgrid->send($email);
+			    print $response->statusCode() . "\n";
+			    print_r($response->headers());
+			    print $response->body() . "\n";
+			} catch (Exception $e) {
+			    echo 'Caught exception: '. $e->getMessage() ."\n";
+			}
 		}
+		
 
 ?>
 

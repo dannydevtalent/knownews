@@ -194,7 +194,7 @@
 			$email->setFrom("knowproapp@gmail.com", "knowproapp User");
 			$email->setSubject("News update report (KnowProDerm)");
 			$email->addTo("knowproapp@gmail.com", "knowproapp@gmail.com");
-			$email->addContent("text/plain", "and easy to do anywhere, even with PHP");
+			$email->addTo("m.k.cj406@gmail.com", "m.k.cj406@gmail.com");
 			$email->addContent(
 			    "text/html", $table
 			);

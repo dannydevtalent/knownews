@@ -171,7 +171,7 @@
 					        echo "Error: " . $insert_sql . ":-" . mysqli_error($conn);
 					     }
 
-
+ 
 					     //sendMessage($item_title);
 
 					} catch (Exception $exception) {

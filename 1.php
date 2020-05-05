@@ -21,7 +21,7 @@
 	use Contentful\Core\Api\Exception;
 	use Contentful\Management\Resource\Entry;
 
-
+	$counter = 0;
 	function sendMessage($title){
 	    $content = array(
 	        "en" => $title
@@ -56,7 +56,7 @@
 	}
 
 
-	$counter = 0;
+	
 	$table = '
 	    <html> 
 	    <head>
@@ -156,8 +156,8 @@
 					     $entry_id = $entry->getId();
 					     $entry1 = $environmentProxy->getEntry($entry_id);
 
-						 $entry1->publish();
-					    
+					     $entry1->publish();
+					     echo "published";
 					    echo $counter." Publish success<br>";
 					    // echo $item_title." title<br>";
 						 $table.='<tr><td>'.$counter.'</td><td>'.$item_title.'</td><td>'.$item_desc.'</td></tr>';
@@ -188,7 +188,7 @@
 
 
 		$table.='</tbody></table></body></html>';
-
+		echo $counter;
 		if($counter>0 ){
 			$email = new \SendGrid\Mail\Mail(); 
 			$email->setFrom("knowproapp@gmail.com", "knowproapp User");

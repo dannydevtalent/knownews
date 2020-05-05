@@ -1,9 +1,11 @@
 <?php
 	require_once 'vendor/autoload.php';
-
+ 	require("sendgrid-php-master/sendgrid-php.php");
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL); 
+
+	set_time_limit(500);
 
 	$spaceId= "yx2a49crvee2";
 	$environmentId = "development";
@@ -55,20 +57,20 @@
 
 
 	$counter = 0;
-	// $table = '
-	//     <h2> News daily update report</h2>
-	//     <html> 
-	//     <head>
-	//     <title>Report</title>
-	//     </head>
-	//     <body>
-	//     <table style="text-align: center">
-	//         <thead>
-	//             <th>ID</th>
-	//             <th>News title</th>
-	//             <th>News description</th>
-	//         </thead>
-	//         <tbody>';
+	$table = '
+	    <html> 
+	    <head>
+	    <title>Report</title>
+	    </head>
+	    <body>
+	     <h2> News update report (KnowProDerm)</h2>
+	    <table style="text-align: center">
+	        <thead>
+	            <th>ID</th>
+	            <th>News title</th>
+	            <th>News description</th>
+	        </thead>
+	        <tbody>';
 
 
 	
@@ -129,8 +131,7 @@
 
 				$item_title_html 		= $title->item(0)->nodeValue;
 				$item_title =       strip_tags($item_title_html);
-				echo $item_title;
-				echo "<br>";
+			
 				$description   		= $items->item($k)->getElementsByTagName('description');
 
 				$item_desc_html = $description->item(0)->nodeValue;
@@ -159,7 +160,7 @@
 					    
 					    echo $counter." Publish success<br>";
 					    // echo $item_title." title<br>";
-						// $table.='<tr><td>'.$counter.'</td><td>'.$item_title.'</td><td>'.$item_desc.'</td></tr>';
+						 $table.='<tr><td>'.$counter.'</td><td>'.$item_title.'</td><td>'.$item_desc.'</td></tr>';
 
 						$today = date("Y/m/d");
 						$insert_sql = "INSERT INTO update_news (item,update_date,status,search_title,search_link)
@@ -186,12 +187,25 @@
 		}
 
 
+		$table.='</tbody></table></body></html>';
 
-
-
-
-
-
+		$email = new \SendGrid\Mail\Mail(); 
+		$email->setFrom("knowproapp@gmail.com", "knowproapp User");
+		$email->setSubject("News update report (KnowProDerm)");
+		$email->addTo("knowproapp@gmail.com", "knowproapp@gmail.com");
+		$email->addContent("text/plain", "and easy to do anywhere, even with PHP");
+		$email->addContent(
+		    "text/html", $table
+		);
+		$sendgrid = new \SendGrid('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');
+		try {
+		    $response = $sendgrid->send($email);
+		    print $response->statusCode() . "\n";
+		    print_r($response->headers());
+		    print $response->body() . "\n";
+		} catch (Exception $e) {
+		    echo 'Caught exception: '. $e->getMessage() ."\n";
+		}
 
 ?>
 
@@ -200,7 +214,7 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
-	<title>Update news</title>
+	<title>Football</title>
 </head>
 <body style="width: 50%; margin: 0 auto">
 	

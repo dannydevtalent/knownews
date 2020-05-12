@@ -171,8 +171,9 @@
 					        echo "Error: " . $insert_sql . ":-" . mysqli_error($conn);
 					     }
 
- 
-					     sendMessage($item_title);
+ 					     if($counter==1){
+					     	sendMessage($item_title);
+					     }
 
 					} catch (Exception $exception) {
 					    echo $exception->getMessage();

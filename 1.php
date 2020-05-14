@@ -4,9 +4,9 @@
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL); 
-    
+
 	set_time_limit(500);
-  
+
 	$spaceId= "yx2a49crvee2";
 	$environmentId = "development";
 	$contentTypeId = "article";
@@ -21,7 +21,7 @@
 	use Contentful\Core\Api\Exception;
 	use Contentful\Management\Resource\Entry;
 
-	$counter = 0;
+
 	function sendMessage($title){
 	    $content = array(
 	        "en" => $title
@@ -56,7 +56,7 @@
 	}
 
 
-	
+	$counter = 0;
 	$table = '
 	    <html> 
 	    <head>
@@ -156,12 +156,12 @@
 					     $entry_id = $entry->getId();
 					     $entry1 = $environmentProxy->getEntry($entry_id);
 
-					     $entry1->publish();
-					     echo "published";
+						 $entry1->publish();
+					    
 					    echo $counter." Publish success<br>";
 					    // echo $item_title." title<br>";
 						 $table.='<tr><td>'.$counter.'</td><td>'.$item_title.'</td><td>'.$item_desc.'</td></tr>';
-
+						 $item_title = str_replace("'", '', $item_title);
 						$today = date("Y/m/d");
 						$insert_sql = "INSERT INTO update_news (item,update_date,status,search_title,search_link)
 					     VALUES ('aa','$today','1','$item_title','$item_link')";
@@ -171,9 +171,10 @@
 					        echo "Error: " . $insert_sql . ":-" . mysqli_error($conn);
 					     }
 
- 					     if($counter==1){
+					     if($counter==1){
 					     	sendMessage($item_title);
 					     }
+					     
 
 					} catch (Exception $exception) {
 					    echo $exception->getMessage();
@@ -189,13 +190,12 @@
 
 
 		$table.='</tbody></table></body></html>';
-		echo $counter;
+
 		if($counter>0 ){
 			$email = new \SendGrid\Mail\Mail(); 
 			$email->setFrom("knowproapp@gmail.com", "knowproapp User");
 			$email->setSubject("News update report (KnowProDerm)");
 			$email->addTo("knowproapp@gmail.com", "knowproapp@gmail.com");
-			$email->addTo("m.k.cj406@gmail.com", "m.k.cj406@gmail.com");
 			$email->addContent(
 			    "text/html", $table
 			);
@@ -218,7 +218,7 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
-	<title>Update News</title>
+	<title>Football</title>
 </head>
 <body style="width: 50%; margin: 0 auto">
 	

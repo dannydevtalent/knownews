@@ -11,7 +11,7 @@
 	$environmentId = "development";
 	$contentTypeId = "article";
 	use Contentful\Management\Client;
-
+ 
 	$client = new Client('CFPAT-um6p7SkC571k7OlGhPs9X6IHGKqUi_S5KHr9oNP9XzM');
 	$environment = $client->getEnvironmentProxy('yx2a49crvee2', 'master');
 	$contentType = $client->getContentType($spaceId, $environmentId, $contentTypeId);

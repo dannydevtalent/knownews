@@ -11,7 +11,7 @@
 	$environmentId = "development";
 	$contentTypeId = "article";
 	use Contentful\Management\Client;
- 
+
 	$client = new Client('CFPAT-um6p7SkC571k7OlGhPs9X6IHGKqUi_S5KHr9oNP9XzM');
 	$environment = $client->getEnvironmentProxy('yx2a49crvee2', 'master');
 	$contentType = $client->getContentType($spaceId, $environmentId, $contentTypeId);
@@ -140,7 +140,9 @@
 
 				$link         		= $items->item($k)->getElementsByTagName('link');
 				$item_link  		= $link->item(0)->nodeValue;
-				
+
+				$item_title = str_replace("'", '', $item_title);
+
 				$check_sql = "SELECT id FROM update_news WHERE search_title='$item_title' AND search_link='$item_link'";
 			 	$search_result = mysqli_query($conn, $check_sql);
 
@@ -161,7 +163,7 @@
 					    echo $counter." Publish success<br>";
 					    // echo $item_title." title<br>";
 						 $table.='<tr><td>'.$counter.'</td><td>'.$item_title.'</td><td>'.$item_desc.'</td></tr>';
-						 $item_title = str_replace("'", '', $item_title);
+						 
 						$today = date("Y/m/d");
 						$insert_sql = "INSERT INTO update_news (item,update_date,status,search_title,search_link)
 					     VALUES ('aa','$today','1','$item_title','$item_link')";
@@ -172,7 +174,7 @@
 					     }
 
 					     if($counter==1){
-					     	sendMessage($item_title);
+					     	//sendMessage($item_title);
 					     }
 					     
 

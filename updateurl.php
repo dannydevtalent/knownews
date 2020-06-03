@@ -97,9 +97,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success btn-add" >Add</button>
-        <div class="ads_dialog_dev"> 
-            <script data-cfasync="false" type="text/javascript" src="https://www.predictivdisplay.com/a/display.php?r=3143071"></script>
-        </div>
+       
       </div>
     </div>
 

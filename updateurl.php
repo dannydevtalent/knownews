@@ -3,7 +3,7 @@
 		header("Location: login.php"); /* Redirect browser */
   		exit();
 	}
-?> 
+?>
 
 <!DOCTYPE html>
 <html>
@@ -138,18 +138,18 @@
         <h4 class="modal-title">Change password</h4>
       </div>
       <div class="modal-body">
+      <!-- 	<div class="form-group">
+      		<label style="width: 25%; float: left;">Current password: </label>
+      		<input style="width: 70%;" class="current_password form-control" type="password">
+      	</div> -->
       	<div class="form-group">
-      		<label style="width: 10%">Current password: </label>
-      		<input class="current_password form-control" type="password">
-      	</div>
-      	<div class="form-group">
-      		<label style="width: 10%;">Change password: </label>
-      		<input class="change_password form-control" type="password">
+      		<label style="width: 25%; float: left;">Change password: </label>
+      		<input style="width: 70%;" class="change_password form-control" type="password">
       	</div>
 
       	<div class="form-group">
-      		<label style="width: 10%;">Confirm : </label>
-      		<input class="confirm_password form-control" type="password">
+      		<label style="width: 25%; float: left;">Confirm password: </label>
+      		<input style="width: 70%;" class="confirm_password form-control" type="password">
       	</div>
       	
 
@@ -157,7 +157,7 @@
       	<input class="edit_url_count" type="hidden">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success btn-edit-save" >Save</button>
+        <button type="button" class="btn btn-success btn-change-password-save" >Save</button>
       </div>
     </div>
 
@@ -248,6 +248,39 @@
 				alert("This url is not correct.")
 			}
 			
+		});
+
+		$(".btn-change-password-save").click(function(){
+			// var current_password = $(".current_password").val();
+			var change_password  = $(".change_password").val();
+			var confirm_password = $(".confirm_password").val();
+			if(change_password == confirm_password){
+				jQuery.ajax({
+		    	url:"ajax.php",
+		        data: { 
+		        	 request:"change_password",
+		        	 password: change_password
+		            },
+		            type: 'post',
+		            success: function(result) 
+		            {
+		            	console.log(result);
+		            	if(result=="success"){
+		            		swal("Success!", "Password has been changed!", "success");
+		            	}
+
+		            }
+				});
+			}
+			else
+			{
+				swal({
+                  title: "Alert",
+                  text: "Confirm password is not correct. Please check again",
+                  type: "warning"
+                });
+				
+			}
 		});
 
 		$('body').on('click','.btn-edit1',function(){

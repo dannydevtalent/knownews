@@ -3,7 +3,7 @@
 		header("Location: login.php"); /* Redirect browser */
   		exit();
 	}
-?> 
+?>
 
 <!DOCTYPE html>
 <html>
@@ -269,6 +269,8 @@
 		            	if(result=="success"){
 		            		swal("Success!", "Password has been changed!", "success");
 		            	}
+
+		            	$("#change_password_dialog").modal("hide");
 
 		            }
 				});

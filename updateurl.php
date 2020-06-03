@@ -1,4 +1,4 @@
-<?php
+<?php 
 	if(empty($_POST['username'])){
 		header("Location: login.php"); /* Redirect browser */
   		exit();

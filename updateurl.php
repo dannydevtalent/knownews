@@ -4,7 +4,7 @@
   		exit();
 	}
 ?>
- 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,9 +65,8 @@
 <body style="width: 80%; margin: 0 auto;">
 	<div class="loading-gif"></div>
 	<button class="btn btn-primary btn-log-out" style="float: right; margin-top: 5%">Log out</button>
-	<button data-toggle="modal" data-target="#change_password_dialog" class="btn btn-primary" style="float: right; margin-top: 5%; margin-right:5%">Change password</button>
 	<button data-toggle="modal" data-target="#add_dialog" class="btn btn-success" style="float: right; margin-top: 5%; margin-right:5%">Add</button>
-	
+	<button data-toggle="modal" data-target="#change_password_dialog" class="btn btn-primary" style="float: right; margin-top: 5%; margin-right:5%">Change password</button>
 	<table class="table">
 		<thead>
 			<tr>
@@ -246,7 +245,12 @@
 				});
 			}
 			else{
-				alert("This url is not correct.")
+				
+				swal({
+                  title: "",
+                  text: "This url is not correct.",
+                  type: "warning"
+                });
 			}
 			
 		});
@@ -256,6 +260,7 @@
 			var change_password  = $(".change_password").val();
 			var confirm_password = $(".confirm_password").val();
 			if(change_password == confirm_password){
+				$(".loading-gif").css("display","block");
 				jQuery.ajax({
 		    	url:"ajax.php",
 		        data: { 
@@ -265,6 +270,7 @@
 		            type: 'post',
 		            success: function(result) 
 		            {
+		            	$(".loading-gif").css("display","none");
 		            	console.log(result);
 		            	if(result=="success"){
 		            		swal("Success!", "Password has been changed!", "success");

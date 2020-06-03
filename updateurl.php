@@ -65,8 +65,9 @@
 <body style="width: 80%; margin: 0 auto;">
 	<div class="loading-gif"></div>
 	<button class="btn btn-primary btn-log-out" style="float: right; margin-top: 5%">Log out</button>
-	<button data-toggle="modal" data-target="#add_dialog" class="btn btn-success" style="float: right; margin-top: 5%; margin-right:5%">Add</button>
 	<button data-toggle="modal" data-target="#change_password_dialog" class="btn btn-primary" style="float: right; margin-top: 5%; margin-right:5%">Change password</button>
+	<button data-toggle="modal" data-target="#add_dialog" class="btn btn-success" style="float: right; margin-top: 5%; margin-right:5%">Add</button>
+	
 	<table class="table">
 		<thead>
 			<tr>

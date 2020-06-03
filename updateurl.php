@@ -1,10 +1,10 @@
-<?php 
+<?php
 	if(empty($_POST['username'])){
 		header("Location: login.php"); /* Redirect browser */
   		exit();
 	}
 ?>
- 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,6 +66,7 @@
 	<div class="loading-gif"></div>
 	<button class="btn btn-primary btn-log-out" style="float: right; margin-top: 5%">Log out</button>
 	<button data-toggle="modal" data-target="#add_dialog" class="btn btn-success" style="float: right; margin-top: 5%; margin-right:5%">Add</button>
+	<button data-toggle="modal" data-target="#change_password_dialog" class="btn btn-primary" style="float: right; margin-top: 5%; margin-right:5%">Change password</button>
 	<table class="table">
 		<thead>
 			<tr>
@@ -97,7 +98,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success btn-add" >Add</button>
-       
+        
       </div>
     </div>
 
@@ -121,6 +122,42 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-success btn-edit-save" >Save</button>
        
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="change_password_dialog" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content" style="margin: 0 auto;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Change password</h4>
+      </div>
+      <div class="modal-body">
+      	<div class="form-group">
+      		<label style="width: 10%">Current password: </label>
+      		<input class="current_password form-control" type="password">
+      	</div>
+      	<div class="form-group">
+      		<label style="width: 10%;">Change password: </label>
+      		<input class="change_password form-control" type="password">
+      	</div>
+
+      	<div class="form-group">
+      		<label style="width: 10%;">Confirm : </label>
+      		<input class="confirm_password form-control" type="password">
+      	</div>
+      	
+
+      	<input class="edit_url_id" type="hidden">
+      	<input class="edit_url_count" type="hidden">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success btn-edit-save" >Save</button>
       </div>
     </div>
 

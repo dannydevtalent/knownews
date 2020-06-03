@@ -3,7 +3,7 @@
 		header("Location: login.php"); /* Redirect browser */
   		exit();
 	}
-?>
+?> 
 
 <!DOCTYPE html>
 <html>

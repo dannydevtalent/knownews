@@ -32,6 +32,18 @@ if($request=="add_feed_url")
 	 }
 }
 
+if($request=="change_password"){
+	$password = $_POST['password'];
+	$update_sql = "UPDATE user SET password = '$password'";
+	if (mysqli_query($conn, $update_sql)) {	
+	 	echo "success";
+	 
+	 } else {
+	 	echo "<br>";
+	    echo "Error: " . $insert_sql . ":-" . mysqli_error($conn);
+	 }
+}
+
 if($request=="update_feed_url")
 {
 	$url = $_POST['url'];

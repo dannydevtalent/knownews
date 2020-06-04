@@ -4,7 +4,7 @@
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL); 
- 
+
 	set_time_limit(500);
 
 	$spaceId= "yx2a49crvee2";
@@ -22,7 +22,7 @@
 	use Contentful\Management\Resource\Entry;
 
 
-	function sendMessage($title){
+	function sendMessage($title,$url){
 	    $content = array(
 	        "en" => $title
 	        );
@@ -32,7 +32,8 @@
 	        'included_segments' => array('All'),
 	        'data' => array("foo" => "bar"),
 	        'large_icon' =>"kp-icon-1024px.png",
-	        'contents' => $content
+	        'contents' => $content,
+	        'url' => $url
 	    );
 
 	    $fields = json_encode($fields);
@@ -174,7 +175,7 @@
 					     }
 
 					     if($counter==1){
-					     	sendMessage($item_title);
+					     	sendMessage($item_title,$item_link );
 					     }
 					     
 

@@ -332,7 +332,7 @@
 		            	$("#alert").fadeIn();
 		            	setTimeout(function(){$("#alert").fadeOut(); }, 3000);
 		            	$("#tr_"+url_id).remove();
-
+				location.reload();
 		            }
 				});
             })

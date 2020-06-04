@@ -1,4 +1,4 @@
-<?php
+<?php 
 	require_once 'vendor/autoload.php';
  	require("sendgrid-php-master/sendgrid-php.php");
 	ini_set('display_errors', 1);
